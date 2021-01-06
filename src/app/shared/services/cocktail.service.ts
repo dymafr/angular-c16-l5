@@ -8,7 +8,10 @@ export class CocktailService {
   public cocktails$: BehaviorSubject<Cocktail[]> = new BehaviorSubject(null);
 
   public getCocktail(index: number) {
-    return this.cocktails$.value[index];
+    const cocktails = this.cocktails$.value
+    if (cocktails) {
+      return cocktails[index];
+    }
   }
 
   public addCocktail(cocktail: Cocktail): void {
