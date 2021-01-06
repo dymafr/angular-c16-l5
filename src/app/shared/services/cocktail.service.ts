@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Cocktail } from "../interfaces/cocktail.interface";
 
@@ -33,12 +33,12 @@ export class CocktailService {
     );
   }
 
-  public fetchCocktails() {
-    this.http
-      .get("https://restapi.fr/api/cocktails")
-      .pipe(tap((cocktails: Cocktail[]) => {
+  public fetchCocktails(): Observable<Cocktail[]> {
+    return this.http.get("https://restapi.fr/api/cocktails").pipe(
+      tap((cocktails: Cocktail[]) => {
         this.cocktails$.next(cocktails);
-      }));
+      })
+    );
   }
 
   constructor(private http: HttpClient) {
